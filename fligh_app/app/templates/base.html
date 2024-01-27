@@ -1,29 +1,14 @@
 <!doctype html>
 <html>
     <head>
-      {% if title %}
-      <title>{{ title }} - Flight app</title>
-      {% else %}
-      <title>Welcome to Flight app!</title>
-      {% endif %}
+        <title>Welcome to the Flight App!</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     </head>
     <body>
-        <h1>Flight app</h1>
-        <div>
-            Flight app:
-            <a href="{{url_for('index')}}">Home</a>
-            <a href={{url_for('login')}}>Login</a>
-        </div>
-        <hr>
-            {% with messages = get_flashed_messages() %}
-        {% if messages %}
-        <ul>
-            {% for message in messages %}
-            <li>{{ message }}</li>
-            {% endfor %}
-        </ul>
-        {% endif %}
-        {% endwith %}
+        <h1>The Flight App</h1>
         {% block content %}{% endblock %}
     </body>
 </html>

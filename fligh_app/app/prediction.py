@@ -1,6 +1,8 @@
 import joblib
 import pandas as pd
 import numpy as np
+import sklearn
+
 
 loaded_model = joblib.load('random_forest_model.joblib')
 
@@ -17,6 +19,7 @@ def make_prediction_motherfucker(FL_DATE, ORIGIN, ORIGIN_CITY, DEST, DEST_CITY, 
         "DISTANCE": DISTANCE,
         "FL_MONTH": FL_MONTH
     }
+    data = pd.DataFrame([data])
 
     required_columns = {'ARR_DELAY_STRATA', 'CRS_ARR_TIME', 'FL_MONTH', 'TAXI_IN', 'WEATHER_IMPACT', 'DEP_DELAY', 'CRS_DEP_TIME', 'DISTANCE', 'TAXI_OUT', 'AIR_TIME'}
     for col in required_columns:
@@ -26,3 +29,11 @@ def make_prediction_motherfucker(FL_DATE, ORIGIN, ORIGIN_CITY, DEST, DEST_CITY, 
     columns_order = ['CRS_DEP_TIME', 'DEP_DELAY', 'TAXI_OUT', 'TAXI_IN', 'CRS_ARR_TIME',
        'AIR_TIME', 'DISTANCE', 'FL_MONTH', 'WEATHER_IMPACT',
        'ARR_DELAY_STRATA']
+
+    data = data.reindex(columns=columns_order)
+
+    result = loaded_model.predict(data)
+    print(data)
+    print(result)
+
+    return result[0]
