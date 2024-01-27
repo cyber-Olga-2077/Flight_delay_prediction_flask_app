@@ -5,11 +5,14 @@ import sklearn
 
 
 loaded_model = joblib.load('random_forest_model.joblib')
+num_pipeline = joblib.load('num_pipeline.joblib')
+cat_pipeline = joblib.load('categorical_pipeline.joblib')
 
 
-def make_prediction_motherfucker(FL_DATE, ORIGIN, ORIGIN_CITY, DEST, DEST_CITY, CRS_DEP_TIME, CRS_ARR_TIME, DISTANCE, FL_MONTH):
+def make_prediction_motherfucker(AIRLINE, AIRLINE_CODE, ORIGIN, ORIGIN_CITY, DEST, DEST_CITY, CRS_DEP_TIME, CRS_ARR_TIME, DISTANCE, FL_DAY,FL_MONTH, FL_YEAR):
     data = {
-        "FL_DATE": FL_DATE,
+        "AIRLINE": AIRLINE,
+        "AIRLINE_CODE": AIRLINE_CODE,
         "ORIGIN": ORIGIN,
         "ORIGIN_CITY": ORIGIN_CITY,
         "DEST": DEST,
@@ -17,20 +20,24 @@ def make_prediction_motherfucker(FL_DATE, ORIGIN, ORIGIN_CITY, DEST, DEST_CITY, 
         "CRS_DEP_TIME": CRS_DEP_TIME,
         "CRS_ARR_TIME": CRS_ARR_TIME,
         "DISTANCE": DISTANCE,
-        "FL_MONTH": FL_MONTH
+        "FL_DAY": FL_DAY,
+        "FL_MONTH": FL_MONTH,
+        "FL_YEAR": FL_YEAR
     }
     data = pd.DataFrame([data])
 
-    required_columns = {'ARR_DELAY_STRATA', 'CRS_ARR_TIME', 'FL_MONTH', 'TAXI_IN', 'WEATHER_IMPACT', 'DEP_DELAY', 'CRS_DEP_TIME', 'DISTANCE', 'TAXI_OUT', 'AIR_TIME'}
-    for col in required_columns:
-        if col not in data:
-            data[col] = np.nan
+    data_num = data.select_dtypes(include=[np.number])
+    data_cat = data.select_dtypes(exclude=[np.number])
 
-    columns_order = ['CRS_DEP_TIME', 'DEP_DELAY', 'TAXI_OUT', 'TAXI_IN', 'CRS_ARR_TIME',
-       'AIR_TIME', 'DISTANCE', 'FL_MONTH', 'WEATHER_IMPACT',
-       'ARR_DELAY_STRATA']
+    data_num_transformed = num_pipeline.transform(data_num)
+    data_cat_transformed = cat_pipeline.transform(data_cat)
 
-    data = data.reindex(columns=columns_order)
+    num_columns = data_num.columns.drop('DISTANCE')
+
+    data_num_transformed_df = pd.DataFrame(data=data_num_transformed, columns=list(num_columns) + ['LOG_DISTANCE'])
+    data_cat_transformed_df = pd.DataFrame(data=data_cat_transformed, columns=data_cat.columns)
+
+    data = data_cat_transformed_df.join(data_num_transformed_df)
 
     result = loaded_model.predict(data)
     print(data)

@@ -6,9 +6,9 @@
     <form action="" method="post" novalidate>
         {{ form.hidden_tag() }}
         <p>
-            {{ form.date.label }}
-            {{ form.date() }}
-            {% for error in form.date.errors %}
+            {{ form.airline.label }}
+            {{ form.airline() }}
+            {% for error in form.airline.errors %}
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
         </p>
@@ -23,6 +23,13 @@
             {{ form.destination.label }}
             {{ form.destination() }}
             {% for error in form.destination.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.date.label }}
+            {{ form.date() }}
+            {% for error in form.date.errors %}
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
         </p>

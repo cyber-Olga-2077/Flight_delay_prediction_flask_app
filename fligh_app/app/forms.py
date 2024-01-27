@@ -1,13 +1,11 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, DateField, TimeField, SelectField
 from wtforms.validators import DataRequired
-from app.util import get_airport_options
+from app.util import get_airport_options, get_airline_options
 
-class LoginForm(FlaskForm):
-    # username = StringField('Username', validators=[DataRequired()])
-    # password = PasswordField('Password', validators=[DataRequired()])
-    # remember_me = BooleanField('Remember Me')
-    # submit = SubmitField('Sign In')
+
+class PredictionForm(FlaskForm):
+
 
     #field for the date
     date = DateField('Date', validators=[DataRequired()])
@@ -19,5 +17,7 @@ class LoginForm(FlaskForm):
     departure_time = TimeField('Departure time', validators=[DataRequired()])
     #Planned arrival time
     arrival_time = TimeField('Arrival time', validators=[DataRequired()])
+    #airline
+    airline = SelectField('Airline', validators=[DataRequired()], choices=get_airline_options())
     #submit button
     submit = SubmitField('Let\'s fly!')

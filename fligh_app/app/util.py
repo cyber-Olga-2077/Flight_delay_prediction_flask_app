@@ -30,3 +30,12 @@ def get_airport_options():
 
 def get_city_from_airport(airport_code):
     return get_all_airports()[airport_code]
+
+def get_all_airlines():
+    return {'UA': 'United Air Lines Inc.', 'DL': 'Delta Air Lines Inc.', 'NK': 'Spirit Air Lines', 'WN': 'Southwest Airlines Co.', 'AA': 'American Airlines Inc.', 'YX': 'Republic Airline', 'AS': 'Alaska Airlines Inc.', 'B6': 'JetBlue Airways', 'OH': 'PSA Airlines Inc.', 'G4': 'Allegiant Air', 'EV': 'ExpressJet Airlines LLC d/b/a aha!', 'OO': 'SkyWest Airlines Inc.', '9E': 'Endeavor Air Inc.', 'MQ': 'Envoy Air', 'F9': 'Frontier Airlines Inc.', 'YV': 'Mesa Airlines Inc.', 'QX': 'Horizon Air', 'HA': 'Hawaiian Airlines Inc.'}
+
+def get_airline_options():
+    return [(key, f"{key}, {value}") for key, value in get_all_airlines().items()]
+
+def get_airline_from_code(airline_code):
+    return get_all_airlines()[airline_code]
