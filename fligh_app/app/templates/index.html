@@ -2,7 +2,7 @@
 
 {% block content %}<main>
 {% if result %} <h2>Your estimated delay seems to be: {{ result }} minutes</h2> {% endif %}
-    <h3>{% if result %}Make next prediction!{% else %}Make prediction!{% endif %}</h3>
+    <h3>{% if result %}Make the next prediction!{% else %}Make a prediction!{% endif %}</h3>
     <form action="" method="post" novalidate>
         {{ form.hidden_tag() }}
         <p>
