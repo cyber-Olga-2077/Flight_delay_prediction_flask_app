@@ -9,7 +9,7 @@ num_pipeline = joblib.load('num_pipeline.joblib')
 cat_pipeline = joblib.load('categorical_pipeline.joblib')
 
 
-def make_prediction_motherfucker(AIRLINE, AIRLINE_CODE, ORIGIN, ORIGIN_CITY, DEST, DEST_CITY, CRS_DEP_TIME, CRS_ARR_TIME, DISTANCE, FL_DAY,FL_MONTH, FL_YEAR):
+def make_prediction(AIRLINE, AIRLINE_CODE, ORIGIN, ORIGIN_CITY, DEST, DEST_CITY, CRS_DEP_TIME, CRS_ARR_TIME, DISTANCE, FL_DAY,FL_MONTH, FL_YEAR):
     data = {
         "AIRLINE": AIRLINE,
         "AIRLINE_CODE": AIRLINE_CODE,
